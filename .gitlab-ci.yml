@@ -1,0 +1,15 @@
+image: "rust:slim"
+
+before_script:
+  - rustup --version && rustc --version && cargo --version
+
+linux-x86_64-gnu:
+  script:
+    - cargo build -vv --all --release --target=x86_64-unknown-linux-gnu
+    - cargo test -vv --all --release --target=x86_64-unknown-linux-gnu
+
+linux-i686-gnu:
+  script:
+    - rustup target add i686-unknown-linux-gnu
+    - cargo build -vv --all--release --target=i686-unknown-linux-gnu
+    - cargo test -vv --all --release --target=i686-unknown-linux-gnu
