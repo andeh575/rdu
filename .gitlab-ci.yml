@@ -11,5 +11,5 @@ linux-x86_64-gnu:
 linux-i686-gnu:
   script:
     - rustup target add i686-unknown-linux-gnu
-    - cargo build -vv --all--release --target=i686-unknown-linux-gnu
+    - cargo build -vv --all --release --target=i686-unknown-linux-gnu
     - cargo test -vv --all --release --target=i686-unknown-linux-gnu
