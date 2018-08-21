@@ -1,5 +1,6 @@
 # `rdu`: a `du` ASCII visualizer in Rust #
 
+[![build status](https://gitlab.com/andeh575/rdu/badges/master/build.svg)](https://gitlab.com/andeh575/rdu/commits/master)
 [![rather rusty](https://img.shields.io/badge/rather-rusty-%23B7410E.svg)](https://www.rustup.rs/)
 
 Copyright © 2018 Andrew Graham
