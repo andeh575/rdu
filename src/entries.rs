@@ -1,36 +1,36 @@
-struct Entries {
+pub struct Entries {
     entries: Vec<Entry>
 }
 
 impl Entries {
-    fn new() -> Entries {
+    pub fn new() -> Entries {
         Entries {
             entries: vec![]
         }
     }
 
-    fn add_entry(&mut self, entry: Entry) {
+    pub fn add_entry(&mut self, entry: Entry) {
         self.entries.push(entry);
     }
 
-    fn compare_entries() {
+    pub fn compare_entries() {
 
     }
 
-    fn compare_sizes() {
+    pub fn compare_sizes() {
 
     }
 
-    fn compare_subtrees() {
+    pub fn compare_subtrees() {
 
     }
 
-    fn show_entries() {
+    pub fn show_entries() {
 
     }
 }
 
-struct Entry {
+pub struct Entry {
     size: u64,                  // Size of this entry
     path: String,               // Current entry path
     depth: u32,                 // Depth of this entry in the tree
@@ -39,7 +39,7 @@ struct Entry {
 }
 
 impl Entry {
-    fn new(path: String) -> Entry {
+    pub fn new(path: String) -> Entry {
         Entry {
             size: 0,
             path: path,
@@ -49,7 +49,7 @@ impl Entry {
         }
     }
 
-    fn show_entry() {
+    pub fn show_entry() {
 
     }
 }

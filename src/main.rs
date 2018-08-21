@@ -5,8 +5,25 @@ use clap::{Arg, App};
 
 use std::io::{self, Read};
 
-const INDENT: i32 = 2;
-const DU_INIT_ENTRIES: i32 = (128 * 1024);
+fn read_du() -> io::Result<(String)> {
+    let mut buffer = String::new();
+    let stdin = io::stdin();
+    let mut handle = stdin.lock();
+
+    handle.read_to_string(&mut buffer)?;
+    
+    Ok(buffer)
+}
+
+fn construct_entries(buffer: String, entries: &mut entries::Entries) {
+    for line in buffer.lines() {
+        let data:Vec<_> = line.split_whitespace().collect();
+        let size = data[0]; // Acquire the size of the item
+        let path = data[1]; // Acquire the path of the item
+
+        
+    }
+}
 
 fn build_tree_postorder() {
 
@@ -16,16 +33,9 @@ fn build_tree_preorder() {
 
 }
 
-fn parse_du() -> io::Result<String> {
-    let mut buffer = String::new();
-    let stdin = io::stdin();
-    let mut handle = stdin.lock();
-
-    handle.read_to_string(&mut buffer)?;
-    Ok(buffer)
-}
-
 fn main() {
+    let mut entries = entries::Entries::new();
+
     let matches = App::new("duvis")
                     .version("0.1.0")
                     .author("Andrew Graham <andrew.t.graham@live.com>")
@@ -41,9 +51,8 @@ fn main() {
                     .get_matches();
 
     println!("Parsing du file...");
-    let buffer = parse_du().unwrap();
-
-    println!("{}", buffer);
+    let buffer = read_du().unwrap();
+    construct_entries(buffer, &mut entries);
 
     if matches.is_present("pre-order") {
         println!("Sorting entries...");
