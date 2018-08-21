@@ -18,3 +18,7 @@ du | rdu
 ### Options ###
 
 + `-p`, `--pre-order`: Enable pre-order sorting
+
+## License ##
+
+This software provided under the [MIT License](https://opensource.org/licenses/MIT).
