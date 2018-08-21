@@ -12,5 +12,6 @@
 # Individual files
 !.gitignore
 !Cargo.toml
+!Cargo.lock
 !LICENSE
 !README.md
