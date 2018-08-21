@@ -1,10 +1,29 @@
-extern crate clap;
-use clap::{Arg, App, SubCommand};
+mod entries;
 
-mod entry;
+extern crate clap;
+use clap::{Arg, App};
+
+use std::io::{self, Read};
 
 const INDENT: i32 = 2;
 const DU_INIT_ENTRIES: i32 = (128 * 1024);
+
+fn build_tree_postorder() {
+
+}
+
+fn build_tree_preorder() {
+
+}
+
+fn parse_du() -> io::Result<String> {
+    let mut buffer = String::new();
+    let stdin = io::stdin();
+    let mut handle = stdin.lock();
+
+    handle.read_to_string(&mut buffer)?;
+    Ok(buffer)
+}
 
 fn main() {
     let matches = App::new("duvis")
@@ -22,6 +41,9 @@ fn main() {
                     .get_matches();
 
     println!("Parsing du file...");
+    let buffer = parse_du().unwrap();
+
+    println!("{}", buffer);
 
     if matches.is_present("pre-order") {
         println!("Sorting entries...");
