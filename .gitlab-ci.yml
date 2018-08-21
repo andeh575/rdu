@@ -1,6 +1,8 @@
 image: "rust:slim"
 
 before_script:
+  - apt-get update
+  - apt-get install -y gcc-multilib
   - rustup --version && rustc --version && cargo --version
 
 linux-x86_64-gnu:
