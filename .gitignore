@@ -1,0 +1,16 @@
+# Ignore everything
+*
+
+# Directories and contents
+!.cargo/
+!.cargo/**
+!.vscode/
+!.vscode/**
+!src/
+!src/*.rs
+
+# Individual files
+!.gitignore
+!Cargo.toml
+!LICENSE
+!README.md
