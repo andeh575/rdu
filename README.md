@@ -5,7 +5,7 @@
 
 Copyright © 2018 Andrew Graham
 
-This is a new implementation of [duvis](https://github.com/BartMassey/duvis), an `xdu` replacement for visualizing `du` disk usage output, written in Rust.
+This is a new implementation of [duvis](https://github.com/BartMassey/duvis), an `xdu` replacement for visualizing `du` disk usage output, written in Rust. `duvis` had an unfortunate dependency on `gtk+-3.0` for the graphical mode and `rdu` seeks to limit external dependencies to ensure cross-platform operability.
 
 ## Usage ##
 

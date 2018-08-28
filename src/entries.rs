@@ -13,19 +13,19 @@ impl Entries {
         self.entries.push(entry);
     }
 
-    pub fn compare_entries() {
+    pub fn compare_entries(self) {
 
     }
 
-    pub fn compare_sizes() {
+    pub fn compare_sizes(self) {
 
     }
 
-    pub fn compare_subtrees() {
+    pub fn compare_subtrees(self) {
 
     }
 
-    pub fn show_entries() {
+    pub fn show_entries(self) {
 
     }
 }
@@ -49,7 +49,7 @@ impl Entry {
         }
     }
 
-    pub fn show_entry() {
+    pub fn show_entry(self) {
 
     }
 }

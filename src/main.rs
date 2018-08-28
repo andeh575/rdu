@@ -20,21 +20,26 @@ fn construct_entries(buffer: String, entries: &mut entries::Entries) {
         let data:Vec<_> = line.split_whitespace().collect();
         let size = data[0]; // Acquire the size of the item
         let path = data[1]; // Acquire the path of the item
+        let components:Vec<_> = path.split("/").collect();
+        let depth = components.iter().count();
 
-        
+
+        println!("Item: {}; size: {}", path, size);
+        println!("\tcomponents: {:?}; depth: {}", components, depth);
     }
 }
 
-fn build_tree_postorder() {
-
+fn build_tree_postorder(tree: &mut entries::Entries) {
+    
 }
 
-fn build_tree_preorder() {
-
+fn build_tree_preorder(tree: &mut entries::Entries) {
+    
 }
 
 fn main() {
-    let mut entries = entries::Entries::new();
+    let mut raw_entries = entries::Entries::new();
+    let mut built_tree = entries::Entries::new();
 
     let matches = App::new("duvis")
                     .version("0.1.0")
@@ -52,14 +57,19 @@ fn main() {
 
     println!("Parsing du file...");
     let buffer = read_du().unwrap();
-    construct_entries(buffer, &mut entries);
+    construct_entries(buffer, &mut raw_entries);
 
     if matches.is_present("pre-order") {
         println!("Sorting entries...");
 
         println!("Building tree (pre-order)...");
+        build_tree_preorder(&mut built_tree);
     } else {
         println!("Build tree (post-order)...");
+        build_tree_postorder(&mut built_tree);
     }
+
+    println!("Rendering tree...");
+    built_tree.show_entries();
 }
 
