@@ -20,7 +20,7 @@ fn construct_entries(buffer: String, entries: &mut entries::Entries) {
         let data:Vec<_> = line.split_whitespace().collect();
         let size: u64 = data[0].to_string().parse().unwrap();
         let path = data[1].to_string();
-        let components:Vec<String> = path.split("/").map(|s| s.to_string()).collect();
+        let components:Vec<String> = path.split("/").map(String::from).collect();
         let depth: u32 = components.iter().count() as u32;
 
         println!("Item: {}; size: {}", path, size);
