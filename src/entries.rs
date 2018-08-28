@@ -53,10 +53,13 @@ impl Entry {
 
     pub fn show_entry(&self) {
         self.indent();
-        println!("{} {}", self.components[0], self.size);
+        println!("/{} {}", self.components[self.components.len() - 1 ], self.size);
     }
 
     fn indent(&self) {
-        print!("{:width$}", "", width = self.depth as usize)
+        match self.depth {
+        1 => print!("{:width$}", "", width = (0) as usize),
+        _ => print!("{:width$}", "", width = (4 * (self.depth - 1)) as usize)
+        }
     }
 }

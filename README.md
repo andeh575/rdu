@@ -18,6 +18,8 @@ du | rdu
 ### Options ###
 
 + `-p`, `--pre-order`: Enable pre-order sorting
++ `-v`, `--verbose`: Enable verbose output
++ `-d`, `--debug`: Enable debug printing
 
 ## License ##
 
