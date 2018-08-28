@@ -13,20 +13,22 @@ impl Entries {
         self.entries.push(entry);
     }
 
-    pub fn compare_entries(self) {
+    pub fn compare_entries(&self) {
 
     }
 
-    pub fn compare_sizes(self) {
+    pub fn compare_sizes(&self) {
 
     }
 
-    pub fn compare_subtrees(self) {
+    pub fn compare_subtrees(&self) {
 
     }
 
-    pub fn show_entries(self) {
-
+    pub fn show_entries(&self) {
+        for entry in &self.entries {
+            entry.show_entry();
+        }
     }
 }
 
@@ -49,7 +51,12 @@ impl Entry {
         }
     }
 
-    pub fn show_entry(self) {
+    pub fn show_entry(&self) {
+        self.indent();
+        println!("{} {}", self.components[0], self.size);
+    }
 
+    fn indent(&self) {
+        print!("{:width$}", "", width = self.depth as usize)
     }
 }

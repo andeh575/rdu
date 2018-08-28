@@ -27,11 +27,11 @@ fn construct_entries(buffer: String, entries: &mut entries::Entries) {
     }
 }
 
-fn build_tree_postorder(tree: &mut entries::Entries) {
+fn build_tree_postorder(tree: &mut entries::Entries, raw: entries::Entries) {
     
 }
 
-fn build_tree_preorder(tree: &mut entries::Entries) {
+fn build_tree_preorder(tree: &mut entries::Entries, raw: entries::Entries) {
     
 }
 
@@ -51,20 +51,29 @@ fn main() {
                         .short("v")
                         .long("verbose")
                         .help("Enable verbose output"))
+                    .arg(Arg::with_name("debug")
+                        .short("d")
+                        .long("debug")
+                        .help("Enable debug output"))
                     .get_matches();
 
     println!("Parsing du file...");
     let buffer = read_du().unwrap();
     construct_entries(buffer, &mut raw_entries);
 
+    if matches.is_present("debug") {
+        println!("Recieved the following from `du`:");
+        raw_entries.show_entries();
+    }
+
     if matches.is_present("pre-order") {
         println!("Sorting entries...");
 
         println!("Building tree (pre-order)...");
-        build_tree_preorder(&mut built_tree);
+        build_tree_preorder(&mut built_tree, raw_entries);
     } else {
         println!("Build tree (post-order)...");
-        build_tree_postorder(&mut built_tree);
+        build_tree_postorder(&mut built_tree, raw_entries);
     }
 
     println!("Rendering tree...");
