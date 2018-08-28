@@ -23,11 +23,6 @@ fn construct_entries(buffer: String, entries: &mut entries::Entries) {
         let components:Vec<String> = path.split("/").map(String::from).collect();
         let depth: u32 = components.iter().count() as u32;
 
-        println!("Item: {}; size: {}", path, size);
-        println!("\tcomponents: {:?}; depth: {}", components, depth);
-
-        // let entry = entries::Entry::new(path, size, depth, components);
-
         entries.add_entry(entries::Entry::new(path, size, depth, components))
     }
 }
@@ -44,7 +39,7 @@ fn main() {
     let mut raw_entries = entries::Entries::new();
     let mut built_tree = entries::Entries::new();
 
-    let matches = App::new("duvis")
+    let matches = App::new("rdu")
                     .version("0.1.0")
                     .author("Andrew Graham <andrew.t.graham@live.com>")
                     .about("A fast(er) xdu replacement")
