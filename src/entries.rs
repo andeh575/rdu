@@ -39,12 +39,12 @@ pub struct Entry {
 }
 
 impl Entry {
-    pub fn new(path: String) -> Entry {
+    pub fn new(path: String, size: u64, depth: u32, components: Vec<String>) -> Entry {
         Entry {
-            size: 0,
+            size: size,
             path: path,
-            depth: 0,
-            components: vec![],
+            depth: depth,
+            components: components,
             children: Box::new(vec![])
         }
     }

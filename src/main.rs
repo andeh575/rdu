@@ -18,14 +18,17 @@ fn read_du() -> io::Result<(String)> {
 fn construct_entries(buffer: String, entries: &mut entries::Entries) {
     for line in buffer.lines() {
         let data:Vec<_> = line.split_whitespace().collect();
-        let size = data[0]; // Acquire the size of the item
-        let path = data[1]; // Acquire the path of the item
-        let components:Vec<_> = path.split("/").collect();
-        let depth = components.iter().count();
-
+        let size: u64 = data[0].to_string().parse().unwrap();
+        let path = data[1].to_string();
+        let components:Vec<String> = path.split("/").map(|s| s.to_string()).collect();
+        let depth: u32 = components.iter().count() as u32;
 
         println!("Item: {}; size: {}", path, size);
         println!("\tcomponents: {:?}; depth: {}", components, depth);
+
+        // let entry = entries::Entry::new(path, size, depth, components);
+
+        entries.add_entry(entries::Entry::new(path, size, depth, components))
     }
 }
 
