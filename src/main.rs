@@ -15,6 +15,11 @@ fn read_du() -> io::Result<(String)> {
     Ok(buffer)
 }
 
+fn status(step: &mut u8, msg: &str) {
+    *step += 1;
+    println!("({}) {}", step, msg);
+}
+
 fn construct_entries(buffer: String, entries: &mut entries::Entries) {
     for line in buffer.lines() {
         let data:Vec<_> = line.split_whitespace().collect();
@@ -38,6 +43,7 @@ fn build_tree_preorder(tree: &mut entries::Entries, raw: entries::Entries) {
 fn main() {
     let mut raw_entries = entries::Entries::new();
     let mut built_tree = entries::Entries::new();
+    let mut step: u8 = 0;
 
     let matches = App::new("rdu")
                     .version("0.1.0")
@@ -57,26 +63,26 @@ fn main() {
                         .help("Enable debug output"))
                     .get_matches();
 
-    println!("Parsing du file...");
+    status(&mut step, "Parsing du file...");
     let buffer = read_du().unwrap();
     construct_entries(buffer, &mut raw_entries);
 
     if matches.is_present("debug") {
-        println!("Recieved the following from `du`:");
+        status(&mut step, "Recieved the following from `du`:");
         raw_entries.show_entries();
     }
 
     if matches.is_present("pre-order") {
-        println!("Sorting entries...");
+        status(&mut step, "Sorting entries...");
 
-        println!("Building tree (pre-order)...");
+        status(&mut step, "Building tree (pre-order)...");
         build_tree_preorder(&mut built_tree, raw_entries);
     } else {
-        println!("Build tree (post-order)...");
+        status(&mut step, "Build tree (post-order)...");
         build_tree_postorder(&mut built_tree, raw_entries);
     }
 
-    println!("Rendering tree...");
+    status(&mut step, "Rendering tree...");
     built_tree.show_entries();
 }
 

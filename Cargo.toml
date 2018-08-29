@@ -1,7 +1,9 @@
 [package]
 name = "rdu"
 version = "0.1.0"
-authors = ["agraham"]
+authors = ["agraham <andrew.t.graham@live.com>"]
+description = "A fast(er) du ASCII visualizer written in Rust."
+license = "MIT"
 
 [dependencies]
 clap = "~2.32"
