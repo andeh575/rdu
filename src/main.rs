@@ -1,8 +1,9 @@
 mod entries;
 
 extern crate clap;
-use clap::{Arg, App};
 
+use clap::{Arg, App};
+use entries::Entry;
 use std::io::{self, Read};
 
 /// Reads in data from `stdin`, assumes it's from `du` and inserts it into a buffer
@@ -13,7 +14,7 @@ fn read_du() -> io::Result<(String)> {
     let mut handle = stdin.lock();
 
     handle.read_to_string(&mut buffer)?;
-    
+
     Ok(buffer)
 }
 
@@ -24,34 +25,30 @@ fn status(step: &mut u8, msg: &str) {
 }
 
 /// Constructs a raw `vector` of `entries` by parsing an input buffer
-fn construct_entries(buffer: String, entries: &mut entries::Entries) {
+fn construct_entries(buffer: String) -> Option<Entry> {
+    let mut stack: Vec<Entry> = vec![];
     for line in buffer.lines() {
-        let data:Vec<_> = line.split_whitespace().collect();
+        let data: Vec<_> = line.split_whitespace().collect();
         let size: u64 = data[0].to_string().parse().unwrap();
         let path = data[1].to_string();
+        let component_count = path.split("/").count();
+        let mut children: Vec<Entry> = vec![];
 
-        entries.add_entry(entries::Entry::new(path, size))
+        // Found a parent?
+        while !stack.is_empty() && component_count < stack.last().unwrap().components.len() {
+            children.insert(0, stack.pop().unwrap());
+        }
+        stack.push(Entry::new(path, size, children));
     }
-}
-
-/// Construct an entry tree in postorder format
-fn build_tree_postorder(tree: &mut entries::Entries, raw: entries::Entries) {
-    
-}
-
-/// Construct an entry tree in preorder format
-fn build_tree_preorder(tree: &mut entries::Entries, raw: entries::Entries) {
-    
+    stack.pop()
 }
 
 fn main() {
-    let mut raw_entries = entries::Entries::new();
-    let mut built_tree = entries::Entries::new();
     let mut step: u8 = 0;
 
     // Construct parser and parse command line arguments
     let matches = App::new("rdu")
-                    .version("0.1.0")
+                    .version("1.0.0")
                     .author("Andrew Graham <andrew.t.graham@live.com>")
                     .about("A fast(er) xdu replacement")
                     .arg(Arg::with_name("pre-order")
@@ -71,25 +68,23 @@ fn main() {
     // Parse stdin into an input buffer
     status(&mut step, "Parsing du file...");
     let buffer = read_du().unwrap();
-    construct_entries(buffer, &mut raw_entries);
+    let tree = construct_entries(buffer).unwrap();
 
     if matches.is_present("debug") {
-        status(&mut step, "Recieved the following from `du`:");
-        raw_entries.show_entries();
+        status(&mut step, "Received the following from `du`:");
+        tree.print_post_ordered();
     }
 
     if matches.is_present("pre-order") {
         // output from `du` is already in post-order format; sort into pre-order format
         status(&mut step, "Sorting entries...");
+        // TODO: actually sort 'em?
 
         status(&mut step, "Building tree (pre-order)...");
-        build_tree_preorder(&mut built_tree, raw_entries);
+        tree.print_pre_ordered();
     } else {
-        status(&mut step, "Build tree (post-order)...");
-        build_tree_postorder(&mut built_tree, raw_entries);
+        status(&mut step, "Building tree (post-order)...");
+        tree.print_post_ordered();
     }
-
-    status(&mut step, "Rendering tree...");
-    built_tree.show_entries();
 }
 
