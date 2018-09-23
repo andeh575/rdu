@@ -6,4 +6,4 @@ description = "A fast(er) du ASCII visualizer written in Rust."
 license = "MIT"
 
 [dependencies]
-clap = "~2.32"
+clap = "2.32.0"
