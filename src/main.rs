@@ -2,7 +2,7 @@ mod entries;
 
 extern crate clap;
 
-use clap::{Arg, App};
+use clap::{App, Arg};
 use entries::Entry;
 use std::io::{self, Read};
 
@@ -48,22 +48,25 @@ fn main() {
 
     // Construct parser and parse command line arguments
     let matches = App::new("rdu")
-                    .version("1.0.0")
-                    .author("Andrew Graham <andrew.t.graham@live.com>")
-                    .about("A fast(er) xdu replacement")
-                    .arg(Arg::with_name("pre-order")
-                        .short("p")
-                        .long("pre-order")
-                        .help("Enable pre-order sorting"))
-                    .arg(Arg::with_name("verbose")
-                        .short("v")
-                        .long("verbose")
-                        .help("Enable verbose output"))
-                    .arg(Arg::with_name("debug")
-                        .short("d")
-                        .long("debug")
-                        .help("Enable debug output"))
-                    .get_matches();
+        .version("1.0.0")
+        .author("Andrew Graham <andrew.t.graham@live.com>")
+        .about("A fast(er) xdu replacement")
+        .arg(
+            Arg::with_name("pre-order")
+                .short("p")
+                .long("pre-order")
+                .help("Enable pre-order sorting"),
+        ).arg(
+            Arg::with_name("verbose")
+                .short("v")
+                .long("verbose")
+                .help("Enable verbose output"),
+        ).arg(
+            Arg::with_name("debug")
+                .short("d")
+                .long("debug")
+                .help("Enable debug output"),
+        ).get_matches();
 
     // Parse stdin into an input buffer
     status(&mut step, "Parsing du file...");
@@ -87,4 +90,3 @@ fn main() {
         tree.print_post_ordered();
     }
 }
-
