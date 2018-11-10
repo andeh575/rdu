@@ -30,7 +30,7 @@ fn construct_entries(buffer: String) -> Option<Entry> {
     for line in buffer.lines() {
         let data: Vec<_> = line.split_whitespace().collect();
         let size: u64 = data[0].to_string().parse().unwrap();
-        let path = data[1].to_string();
+        let path = data[1].trim_end_matches("/").to_string();
         let component_count = path.split("/").count();
         let mut children: Vec<Entry> = vec![];
 
@@ -75,7 +75,11 @@ fn main() {
 
     if matches.is_present("debug") {
         status(&mut step, "Received the following from `du`:");
-        tree.print_post_ordered();
+        if matches.is_present("pre-order") {
+            tree.print_pre_ordered();
+        } else {
+            tree.print_post_ordered();
+        }
     }
 
     if matches.is_present("pre-order") {
