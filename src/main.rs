@@ -4,19 +4,8 @@ extern crate clap;
 
 use clap::{App, Arg};
 use entries::Entry;
-use std::io::{self, Read};
+use std::io::{self, BufRead};
 
-/// Reads in data from `stdin`, assumes it's from `du` and inserts it into a buffer
-fn read_du() -> io::Result<(String)> {
-    // TODO: Needs to be updated to read from stdin as information becomes available
-    let mut buffer = String::new();
-    let stdin = io::stdin();
-    let mut handle = stdin.lock();
-
-    handle.read_to_string(&mut buffer)?;
-
-    Ok(buffer)
-}
 
 /// Generic status printing function
 fn status(step: &mut u8, msg: &str) {
@@ -25,9 +14,10 @@ fn status(step: &mut u8, msg: &str) {
 }
 
 /// Constructs a raw `vector` of `entries` by parsing an input buffer
-fn construct_entries(buffer: String) -> Option<Entry> {
+fn construct_entries() -> Option<Entry> {
     let mut stack: Vec<Entry> = vec![];
-    for line in buffer.lines() {
+    let stdin = io::stdin();
+    for line in stdin.lock().lines().map(|l| l.unwrap()) {
         let data: Vec<_> = line.split_whitespace().collect();
         let size: u64 = data[0].to_string().parse().unwrap();
         let path = data[1].trim_end_matches("/").to_string();
@@ -70,8 +60,7 @@ fn main() {
 
     // Parse stdin into an input buffer
     status(&mut step, "Parsing du file...");
-    let buffer = read_du().unwrap();
-    let tree = construct_entries(buffer).unwrap();
+    let tree = construct_entries().unwrap();
 
     if matches.is_present("debug") {
         status(&mut step, "Received the following from `du`:");
