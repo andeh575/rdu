@@ -13,15 +13,15 @@ fn status(step: &mut u8, msg: &str) {
     println!("({}) {}", step, msg);
 }
 
-/// Constructs a raw `vector` of `entries` by parsing an input buffer
+/// Constructs a list of `Entry`s by parsing `stdin`
 fn construct_entries() -> Option<Entry> {
     let mut stack: Vec<Entry> = vec![];
     let stdin = io::stdin();
     for line in stdin.lock().lines().map(|l| l.unwrap()) {
         let data: Vec<_> = line.split_whitespace().collect();
-        let size: u64 = data[0].to_string().parse().unwrap();
+        let size = data[0].to_string().parse().unwrap();
         let path = data[1].trim_end_matches("/").to_string();
-        let component_count = path.split("/").count();
+        let component_count = path.split('/').count();
         let mut children: Vec<Entry> = vec![];
 
         // Found a parent?
@@ -58,10 +58,11 @@ fn main() {
                 .help("Enable debug output"),
         ).get_matches();
 
-    // Parse stdin into an input buffer
+    // Parse `du` data from `stdin`
     status(&mut step, "Parsing du file...");
     let tree = construct_entries().unwrap();
 
+    // jsleeper:11-18-2018: I don't _think_ this is useful anymore?
     if matches.is_present("debug") {
         status(&mut step, "Received the following from `du`:");
         if matches.is_present("pre-order") {
@@ -72,10 +73,6 @@ fn main() {
     }
 
     if matches.is_present("pre-order") {
-        // output from `du` is already in post-order format; sort into pre-order format
-        status(&mut step, "Sorting entries...");
-        // TODO: actually sort 'em?
-
         status(&mut step, "Building tree (pre-order)...");
         tree.print_pre_ordered();
     } else {
