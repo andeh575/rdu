@@ -8,6 +8,8 @@
 !.vscode/**
 !src/
 !src/*.rs
+!benches/
+!benches/*.rs
 
 # Individual files
 !.gitignore
@@ -16,3 +18,4 @@
 !LICENSE
 !README.md
 !.gitlab-ci.yml
+!test-du-output.txt
