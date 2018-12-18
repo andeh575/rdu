@@ -4,6 +4,7 @@ version = "1.0.0"
 authors = ["agraham <andrew.t.graham@live.com>", "Joshua Sleeper <joshua.sleeper+github@gmail.com>", "Anthony Spurgeon <spurgeona@gmail.com>"]
 description = "A fast(er) du ASCII visualizer written in Rust."
 license = "MIT"
+edition = "2018"
 
 [dependencies]
 clap = "2.32.0"

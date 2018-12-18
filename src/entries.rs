@@ -60,7 +60,7 @@ impl Entry {
 #[cfg(test)]
 mod tests {
 
-    use entries::*;
+    use crate::entries::*;
 
     /// Helper function to generate some test `Entry`s
     fn generate_entries() -> (Entry, Entry) {

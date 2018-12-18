@@ -1,9 +1,7 @@
 mod entries;
 
-extern crate clap;
-
 use clap::{App, Arg};
-use entries::Entry;
+use crate::entries::Entry;
 use std::io::{self, BufRead};
 
 
