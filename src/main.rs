@@ -1,9 +1,8 @@
 mod entries;
 
-use clap::{App, Arg};
 use crate::entries::Entry;
+use clap::{App, Arg};
 use std::io::{self, BufRead};
-
 
 /// Generic status printing function
 fn status(step: &mut u8, msg: &str) {
@@ -18,7 +17,7 @@ fn construct_entries() -> Option<Entry> {
     for line in stdin.lock().lines().map(|l| l.unwrap()) {
         let data: Vec<_> = line.split_whitespace().collect();
         let size = data[0].to_string().parse().unwrap();
-        let path = data[1].trim_end_matches("/").to_string();
+        let path = data[1].trim_end_matches('/').to_string();
         let component_count = path.split('/').count();
         let mut children: Vec<Entry> = vec![];
 
@@ -44,17 +43,20 @@ fn main() {
                 .short("p")
                 .long("pre-order")
                 .help("Enable pre-order sorting"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("verbose")
                 .short("v")
                 .long("verbose")
                 .help("Enable verbose output"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("debug")
                 .short("d")
                 .long("debug")
                 .help("Enable debug output"),
-        ).get_matches();
+        )
+        .get_matches();
 
     // Parse `du` data from `stdin`
     status(&mut step, "Parsing du file...");
