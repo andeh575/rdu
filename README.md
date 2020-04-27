@@ -45,4 +45,3 @@ cat du-output.txt | rdu
 ## License ##
 
 This software provided under the [MIT License](https://opensource.org/licenses/MIT).
-

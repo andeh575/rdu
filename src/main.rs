@@ -35,7 +35,7 @@ fn main() {
 
     // Construct parser and parse command line arguments
     let matches = App::new("rdu")
-        .version("1.0.0")
+        .version("1.0.1")
         .author("Andrew Graham <andrew.t.graham@live.com>")
         .about("A fast(er) xdu replacement")
         .arg(
